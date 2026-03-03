@@ -1,0 +1,27 @@
+﻿<article
+  class="course-card"
+  [ngClass]="{ 'course-card--closed': !course.isOpen }"
+  [ngStyle]="{ 'border-left-color': trackColor }"
+  [attr.data-course-index]="index + 1"
+>
+  <h2>{{ course.title }}</h2>
+  <p class="course-track">{{ course.track }}</p>
+
+  <div [ngSwitch]="course.level" class="level-box">
+    <span *ngSwitchCase="'Начальный'" class="level level--beginner">Начальный</span>
+    <span *ngSwitchCase="'Средний'" class="level level--middle">Средний</span>
+    <span *ngSwitchCase="'Продвинутый'" class="level level--advanced">Продвинутый</span>
+    <span *ngSwitchDefault class="level">Без уровня</span>
+  </div>
+
+  <p>Длительность: {{ course.duration }}</p>
+  <p>Студентов: {{ course.students }}</p>
+  <p [ngClass]="{ 'rating-high': course.rating >= 4.7, 'rating-low': course.rating < 4.7 }">
+    Рейтинг: {{ course.rating }}
+  </p>
+
+  <p *ngIf="course.isOpen; else closedStatus" class="status status--open">Набор открыт</p>
+  <ng-template #closedStatus>
+    <p class="status status--closed">Набор закрыт</p>
+  </ng-template>
+</article>

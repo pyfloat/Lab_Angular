@@ -1,29 +1,25 @@
 ﻿import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
-type CourseTrack = 'Системное администрирование' | 'DevOps' | 'Сети' | 'Информационная безопасность';
-type CourseLevel = 'Начальный' | 'Средний' | 'Продвинутый';
-type TrackFilter = 'Все' | CourseTrack;
-
-interface PlatformCourse {
-  title: string;
-  track: CourseTrack;
-  level: CourseLevel;
-  duration: string;
-  students: number;
-  rating: number;
-  isOpen: boolean;
-}
+import { ContentFrame } from './content-frame/content-frame';
+import { CourseCard } from './course-card/course-card';
+import { CourseFilters } from './course-filters/course-filters';
+import { PlatformCourse, TrackFilter } from './about.models';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, CourseFilters, CourseCard, ContentFrame],
   templateUrl: './about.html',
   styleUrl: './about.scss'
 })
 export class About {
+  @ViewChild(CourseFilters, { static: false })
+  private filtersComponent?: CourseFilters;
+
+  @ViewChild(ContentFrame, { static: false })
+  private frameComponent?: ContentFrame;
+
   showOnlyOpen = false;
   selectedTrack: TrackFilter = 'Все';
 
@@ -91,26 +87,23 @@ export class About {
     });
   }
 
-  toggleOnlyOpen(): void {
-    this.showOnlyOpen = !this.showOnlyOpen;
-  }
-
-  setTrack(track: TrackFilter): void {
+  onTrackChange(track: TrackFilter): void {
     this.selectedTrack = track;
   }
 
-  getTrackColor(track: CourseTrack): string {
-    switch (track) {
-      case 'Системное администрирование':
-        return '#1f72b7';
-      case 'DevOps':
-        return '#2e7d32';
-      case 'Сети':
-        return '#ef6c00';
-      case 'Информационная безопасность':
-        return '#6a1b9a';
-      default:
-        return '#1f72b7';
-    }
+  onOnlyOpenChange(value: boolean): void {
+    this.showOnlyOpen = value;
+  }
+
+  resetByViewChild(): void {
+    this.filtersComponent?.resetToAll();
+  }
+
+  highlightHeaderByViewChild(): void {
+    this.frameComponent?.highlightTitle();
+  }
+
+  clearHeaderByViewChild(): void {
+    this.frameComponent?.clearTitleHighlight();
   }
 }

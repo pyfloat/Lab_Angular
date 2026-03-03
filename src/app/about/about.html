@@ -1,64 +1,35 @@
-﻿<section class="catalog-page">
-  <header class="catalog-head">
-    <h1>Все курсы платформы</h1>
+﻿<app-content-frame #frameRef>
+  <div frame-header>
+    <h1 #frameTitle>Все курсы платформы</h1>
     <p>
-      Компонент показывает полный список курсов и позволяет фильтровать их по направлению
-      и по статусу набора.
+      На странице показан каталог курсов с фильтрами. Здесь используются вложенные компоненты,
+      ng-content, ViewChild, ContentChild и шаблонные переменные.
     </p>
-  </header>
+  </div>
 
-  <section class="filters">
-    <div class="filters__tracks">
-      <button
-        *ngFor="let track of tracks"
-        type="button"
-        (click)="setTrack(track)"
-        [ngClass]="{ 'track-btn': true, 'track-btn--active': selectedTrack === track }"
-      >
-        {{ track }}
-      </button>
-    </div>
+  <app-course-filters
+    #filtersRef
+    [tracks]="tracks"
+    [selectedTrack]="selectedTrack"
+    [showOnlyOpen]="showOnlyOpen"
+    (trackChange)="onTrackChange($event)"
+    (onlyOpenChange)="onOnlyOpenChange($event)"
+  ></app-course-filters>
 
-    <button
-      type="button"
-      class="open-btn"
-      (click)="toggleOnlyOpen()"
-      [ngClass]="{ 'open-btn--active': showOnlyOpen }"
-      [ngStyle]="{ 'background-color': showOnlyOpen ? '#2e7d32' : '#5a6e82' }"
-    >
-      {{ showOnlyOpen ? 'Показаны только открытые' : 'Показывать только открытые' }}
-    </button>
-  </section>
+  <div class="tools">
+    <button type="button" (click)="filtersRef.resetToAll()">Сбросить фильтр (template var)</button>
+    <button type="button" (click)="resetByViewChild()">Сбросить фильтр (ViewChild)</button>
+    <button type="button" (click)="frameRef.highlightTitle()">Подсветить заголовок (template var)</button>
+    <button type="button" (click)="highlightHeaderByViewChild()">Подсветить заголовок (ViewChild)</button>
+    <button type="button" (click)="clearHeaderByViewChild()">Убрать подсветку</button>
+  </div>
 
   <section *ngIf="visibleCourses.length > 0; else emptyBlock" class="course-grid">
-    <article
+    <app-course-card
       *ngFor="let course of visibleCourses; let i = index"
-      class="course-card"
-      [ngClass]="{ 'course-card--closed': !course.isOpen }"
-      [ngStyle]="{ 'border-left-color': getTrackColor(course.track) }"
-      [attr.data-course-index]="i + 1"
-    >
-      <h2>{{ course.title }}</h2>
-      <p class="course-track">{{ course.track }}</p>
-
-      <div [ngSwitch]="course.level" class="level-box">
-        <span *ngSwitchCase="'Начальный'" class="level level--beginner">Начальный</span>
-        <span *ngSwitchCase="'Средний'" class="level level--middle">Средний</span>
-        <span *ngSwitchCase="'Продвинутый'" class="level level--advanced">Продвинутый</span>
-        <span *ngSwitchDefault class="level">Без уровня</span>
-      </div>
-
-      <p>Длительность: {{ course.duration }}</p>
-      <p>Студентов: {{ course.students }}</p>
-      <p [ngClass]="{ 'rating-high': course.rating >= 4.7, 'rating-low': course.rating < 4.7 }">
-        Рейтинг: {{ course.rating }}
-      </p>
-
-      <p *ngIf="course.isOpen; else closedStatus" class="status status--open">Набор открыт</p>
-      <ng-template #closedStatus>
-        <p class="status status--closed">Набор закрыт</p>
-      </ng-template>
-    </article>
+      [course]="course"
+      [index]="i"
+    ></app-course-card>
   </section>
 
   <ng-template #emptyBlock>
@@ -69,4 +40,4 @@
     <a routerLink="/">На главную</a>
     <a routerLink="/course">К программе</a>
   </div>
-</section>
+</app-content-frame>

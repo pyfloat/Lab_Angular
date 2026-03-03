@@ -1,0 +1,22 @@
+﻿<section class="filters">
+  <div class="filters__tracks">
+    <button
+      *ngFor="let track of tracks"
+      type="button"
+      (click)="selectTrack(track)"
+      [ngClass]="{ 'track-btn': true, 'track-btn--active': selectedTrack === track }"
+    >
+      {{ track }}
+    </button>
+  </div>
+
+  <button
+    type="button"
+    class="open-btn"
+    (click)="toggleOnlyOpen()"
+    [ngClass]="{ 'open-btn--active': showOnlyOpen }"
+    [ngStyle]="{ 'background-color': showOnlyOpen ? '#2e7d32' : '#5a6e82' }"
+  >
+    {{ showOnlyOpen ? 'Показаны только открытые' : 'Показывать только открытые' }}
+  </button>
+</section>

@@ -1,0 +1,43 @@
+﻿:host {
+  display: block;
+}
+
+.filters {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.filters__tracks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.track-btn,
+.open-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.track-btn {
+  background: #e8f2fb;
+  color: #1f4e79;
+}
+
+.track-btn--active {
+  background: #1f72b7;
+  color: #ffffff;
+}
+
+.open-btn {
+  width: fit-content;
+  color: #ffffff;
+}
+
+.open-btn--active {
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+}
