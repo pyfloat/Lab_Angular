@@ -1,0 +1,55 @@
+﻿<section class="chat-box">
+  <h2>{{ chatTitle }}</h2>
+
+  <div class="chat-form">
+    <label>
+      Ваше имя
+      <input
+        type="text"
+        [(ngModel)]="authorName"
+        [attr.maxlength]="30"
+        [attr.placeholder]="'Введите имя'"
+      />
+    </label>
+
+    <label>
+      Сообщение
+      <textarea
+        [(ngModel)]="newMessage"
+        (input)="onMessageInput()"
+        [attr.maxlength]="messageLimit"
+        [attr.placeholder]="'Введите комментарий по курсу'"
+      ></textarea>
+    </label>
+
+    <div class="chat-form__meta">
+      <span
+        class="chat-counter"
+        [class.chat-counter--warn]="charsLeft < 15"
+        [style.color]="charsLeft < 15 ? '#d83a3a' : '#4b6177'"
+      >
+        Осталось символов: {{ charsLeft }}
+      </span>
+    </div>
+
+    <div class="chat-form__actions">
+      <button type="button" (click)="sendComment()" [disabled]="!canSend">Отправить</button>
+    </div>
+  </div>
+
+  <div class="chat-list">
+    <article
+      class="chat-item"
+      *ngFor="let item of comments; let i = index"
+      [class.chat-item--odd]="i % 2 === 1"
+      [style.border-left-color]="i % 2 === 0 ? '#1f72b7' : '#7b97b3'"
+      [attr.data-index]="i + 1"
+    >
+      <header>
+        <strong>{{ item.author }}</strong>
+        <span>{{ item.createdAt }}</span>
+      </header>
+      <p>{{ item.text }}</p>
+    </article>
+  </div>
+</section>
