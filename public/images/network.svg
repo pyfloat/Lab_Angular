@@ -1,0 +1,17 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" role="img" aria-label="Network module">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#122844"/>
+      <stop offset="100%" stop-color="#1c3657"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="360" rx="24" fill="url(#g)"/>
+  <circle cx="130" cy="180" r="42" fill="#4cc9f0"/>
+  <circle cx="300" cy="90" r="34" fill="#43d9a3"/>
+  <circle cx="470" cy="180" r="42" fill="#ffbd59"/>
+  <circle cx="300" cy="270" r="34" fill="#86e2ff"/>
+  <path d="M170 165 L266 106" stroke="#dce9f8" stroke-width="8" stroke-linecap="round"/>
+  <path d="M334 106 L428 165" stroke="#dce9f8" stroke-width="8" stroke-linecap="round"/>
+  <path d="M450 215 L323 255" stroke="#dce9f8" stroke-width="8" stroke-linecap="round"/>
+  <path d="M275 255 L152 214" stroke="#dce9f8" stroke-width="8" stroke-linecap="round"/>
+</svg>

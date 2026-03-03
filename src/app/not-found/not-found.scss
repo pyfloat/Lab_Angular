@@ -1,0 +1,45 @@
+﻿:host {
+  display: block;
+}
+
+.not-found {
+  background: #ffffff;
+  border: 1px solid #d6e2ee;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  text-align: center;
+}
+
+.not-found img {
+  width: min(100%, 500px);
+  margin: 0 auto;
+  border: 1px solid #d6e2ee;
+  border-radius: 10px;
+}
+
+.not-found h1 {
+  margin: 14px 0 0;
+  color: #11395b;
+  font-size: 30px;
+}
+
+.not-found p {
+  margin: 8px auto 0;
+  color: #4b6177;
+  max-width: 640px;
+}
+
+.not-found a {
+  margin-top: 12px;
+  display: inline-block;
+  text-decoration: none;
+  background: #1f72b7;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.not-found a:hover {
+  background: #195e95;
+}

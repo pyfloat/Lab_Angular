@@ -1,0 +1,23 @@
+﻿<div class="site-shell">
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a routerLink="/" class="brand">
+        <img src="images/it-logo.svg" alt="IT логотип" class="brand__logo" />
+        <span>KernelCraft Hub</span>
+      </a>
+      <nav class="menu-links">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Главная</a>
+        <a routerLink="/course" routerLinkActive="active">Каталог курсов</a>
+        <a routerLink="/about" routerLinkActive="active">О платформе</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-frame">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="site-footer">
+    <p>KernelCraft Hub | IT-курсы по системному администрированию</p>
+  </footer>
+</div>

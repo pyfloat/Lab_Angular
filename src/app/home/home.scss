@@ -1,0 +1,153 @@
+﻿:host {
+  display: block;
+}
+
+.hero,
+.tracks,
+.workflow {
+  background: #ffffff;
+  border: 1px solid #d6e2ee;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.hero {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.hero__badge {
+  display: inline-block;
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f4c81;
+  background: #d8ecff;
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #11395b;
+}
+
+.hero p {
+  margin: 12px 0 0;
+  color: #4b6177;
+}
+
+.hero__actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-weight: 600;
+}
+
+.btn--primary {
+  background: #1f72b7;
+  color: #ffffff;
+}
+
+.btn--primary:hover {
+  background: #195e95;
+}
+
+.btn--ghost {
+  border: 1px solid #9bb8d1;
+  color: #1f4e79;
+  background: #f5faff;
+}
+
+.btn--ghost:hover {
+  background: #eaf3fc;
+}
+
+.hero__visual {
+  border: 1px solid #d6e2ee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tracks {
+  margin-top: 14px;
+  padding: 18px;
+}
+
+.tracks h2,
+.workflow h2 {
+  margin: 0;
+  color: #143f66;
+}
+
+.track-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.track-card {
+  border: 1px solid #d6e2ee;
+  border-radius: 10px;
+  padding: 12px;
+  background: #f9fcff;
+}
+
+.track-card img {
+  border-radius: 8px;
+}
+
+.track-card h3 {
+  margin: 10px 0 0;
+  font-size: 17px;
+  color: #1f4e79;
+}
+
+.track-card p {
+  margin: 8px 0 0;
+  color: #50667c;
+  font-size: 14px;
+}
+
+.workflow {
+  margin-top: 14px;
+  padding: 18px;
+}
+
+.workflow ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: #4b6177;
+}
+
+.workflow li {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 940px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .track-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .track-grid {
+    grid-template-columns: 1fr;
+  }
+}
