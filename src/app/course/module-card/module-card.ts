@@ -1,4 +1,4 @@
-﻿import { Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-module-card',
@@ -10,7 +10,5 @@ export class ModuleCard {
   @Input({ required: true }) title = '';
   @Input({ required: true }) description = '';
   @Input({ required: true }) image = '';
-  @Input({ required: true }) level = '';
-  @Input({ required: true }) duration = '';
-  @Input() highlighted = false;
+  @Input({ required: true }) price = '';
 }

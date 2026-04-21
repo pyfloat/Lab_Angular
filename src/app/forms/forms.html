@@ -1,0 +1,186 @@
+<section class="lab-header">
+  <p class="lab-header__badge">Запись на обучение</p>
+  <h1>Анкета слушателя</h1>
+  <p>
+    Заполните регистрационную форму и расскажите, какое направление подготовки вас
+    интересует.
+  </p>
+</section>
+
+<section class="service-card">
+  <h2>Перед отправкой</h2>
+  <p>
+    Проверьте корректность контактных данных и выберите направление, которое хотите изучать
+    в первую очередь.
+  </p>
+</section>
+
+<section class="forms-grid">
+  <article class="form-card">
+    <div class="form-card__head">
+      <h2>Регистрация</h2>
+      <p [class.invalid]="registrationForm.invalid">
+        Состояние: {{ registrationForm.invalid ? 'невалидна' : 'валидна' }}
+      </p>
+    </div>
+
+    <form class="lab-form" [formGroup]="registrationForm" (ngSubmit)="submitRegistration()" novalidate>
+      <label>
+        <span>ФИО</span>
+        <input type="text" formControlName="name" placeholder="Иванов Иван Иванович" />
+      </label>
+      <div class="error-block" *ngIf="nameControl.invalid && (nameControl.touched || nameControl.dirty)">
+        <p *ngIf="nameControl.errors?.['required']">Поле ФИО обязательно.</p>
+        <p *ngIf="nameControl.errors?.['minlength']">Минимум 3 символа.</p>
+        <p *ngIf="nameControl.errors?.['maxlength']">Максимум 60 символов.</p>
+      </div>
+
+      <label>
+        <span>Телефон</span>
+        <input
+          type="tel"
+          formControlName="tel"
+          placeholder="+79991234567"
+          [attr.pattern]="phonePattern"
+        />
+      </label>
+      <div class="error-block" *ngIf="telControl.invalid && (telControl.touched || telControl.dirty)">
+        <p *ngIf="telControl.errors?.['required']">Поле телефона обязательно.</p>
+        <p *ngIf="telControl.errors?.['minlength']">Минимальная длина: 11 символов.</p>
+        <p *ngIf="telControl.errors?.['maxlength']">Максимальная длина: 12 символов.</p>
+        <p *ngIf="telControl.errors?.['pattern']">
+          Введите телефон в формате <code>+79991234567</code> или <code>89991234567</code>.
+        </p>
+      </div>
+
+      <label>
+        <span>Дата рождения</span>
+        <input type="date" formControlName="birth" [max]="maxBirthDate" />
+      </label>
+      <div class="error-block" *ngIf="birthControl.invalid && (birthControl.touched || birthControl.dirty)">
+        <p *ngIf="birthControl.errors?.['required']">Дата рождения обязательна.</p>
+        <p *ngIf="birthControl.errors?.['invalidDate']">Введите корректную дату.</p>
+        <p *ngIf="birthControl.errors?.['currentYearNotAllowed']">
+          Нельзя выбирать дату рождения с текущим годом или будущим годом.
+        </p>
+      </div>
+
+      <label>
+        <span>Email</span>
+        <input type="email" formControlName="email" placeholder="student@example.com" />
+      </label>
+      <div class="error-block" *ngIf="emailControl.invalid && (emailControl.touched || emailControl.dirty)">
+        <p *ngIf="emailControl.errors?.['required']">Email обязателен.</p>
+        <p *ngIf="emailControl.errors?.['minlength']">Минимум 6 символов.</p>
+        <p *ngIf="emailControl.errors?.['maxlength']">Максимум 80 символов.</p>
+        <p *ngIf="emailControl.errors?.['email']">Введите корректный email.</p>
+      </div>
+
+      <label>
+        <span>Пароль</span>
+        <input type="password" formControlName="password" placeholder="Минимум 6 символов" />
+      </label>
+      <div
+        class="error-block"
+        *ngIf="passwordControl.invalid && (passwordControl.touched || passwordControl.dirty)"
+      >
+        <p *ngIf="passwordControl.errors?.['required']">Пароль обязателен.</p>
+        <p *ngIf="passwordControl.errors?.['minlength']">Минимум 6 символов.</p>
+        <p *ngIf="passwordControl.errors?.['maxlength']">Максимум 20 символов.</p>
+      </div>
+
+      <button class="btn btn--primary" type="submit" [disabled]="registrationForm.invalid">
+        Отправить регистрацию
+      </button>
+    </form>
+
+    <div class="result-box" *ngIf="submittedRegistration as registration">
+      <h3>Заявка отправлена</h3>
+      <p><strong>ФИО:</strong> {{ registration.name }}</p>
+      <p><strong>Телефон:</strong> {{ registration.tel }}</p>
+      <p><strong>Дата рождения:</strong> {{ registration.birth }}</p>
+      <p><strong>Email:</strong> {{ registration.email }}</p>
+    </div>
+  </article>
+
+  <article class="form-card">
+    <div class="form-card__head">
+      <h2>Ваши интересы</h2>
+      <p [class.invalid]="knowledgeForm.invalid">
+        Состояние: {{ knowledgeForm.invalid ? 'невалидна' : 'валидна' }}
+      </p>
+    </div>
+
+    <form class="lab-form" #knowledgeForm="ngForm" (ngSubmit)="submitKnowledge(knowledgeForm)" novalidate>
+      <label>
+        <span>Направление</span>
+        <select
+          name="direction"
+          [(ngModel)]="knowledgeModel.direction"
+          #directionModel="ngModel"
+          required
+        >
+          <option value="">Выберите направление</option>
+          <option *ngFor="let direction of directions" [value]="direction">{{ direction }}</option>
+        </select>
+      </label>
+      <div
+        class="error-block"
+        *ngIf="directionModel.invalid && (directionModel.touched || knowledgeForm.submitted)"
+      >
+        <p>Выберите направление обучения.</p>
+      </div>
+
+      <label>
+        <span>Ожидаемый срок обучения, месяцев</span>
+        <input
+          type="number"
+          name="durationMonths"
+          [(ngModel)]="knowledgeModel.durationMonths"
+          #durationModel="ngModel"
+          required
+          min="1"
+          max="36"
+        />
+      </label>
+      <div
+        class="error-block"
+        *ngIf="durationModel.invalid && (durationModel.touched || knowledgeForm.submitted)"
+      >
+        <p *ngIf="durationModel.errors?.['required']">Введите срок обучения.</p>
+        <p *ngIf="durationModel.errors?.['min']">Минимальное значение: 1 месяц.</p>
+        <p *ngIf="durationModel.errors?.['max']">Максимальное значение: 36 месяцев.</p>
+      </div>
+
+      <label>
+        <span>Что хотите изучить</span>
+        <input
+          type="text"
+          name="goal"
+          [(ngModel)]="knowledgeModel.goal"
+          #goalModel="ngModel"
+          required
+          minlength="5"
+          maxlength="80"
+          placeholder="Например, Docker и CI/CD"
+        />
+      </label>
+      <div class="error-block" *ngIf="goalModel.invalid && (goalModel.touched || knowledgeForm.submitted)">
+        <p *ngIf="goalModel.errors?.['required']">Опишите цель обучения.</p>
+        <p *ngIf="goalModel.errors?.['minlength']">Минимум 5 символов.</p>
+        <p *ngIf="goalModel.errors?.['maxlength']">Максимум 80 символов.</p>
+      </div>
+
+      <button class="btn btn--primary" type="submit" [disabled]="knowledgeForm.invalid">
+        Отправить форму
+      </button>
+    </form>
+
+    <div class="result-box" *ngIf="submittedKnowledge as knowledge">
+      <h3>Данные сохранены</h3>
+      <p><strong>Направление:</strong> {{ knowledge.direction }}</p>
+      <p><strong>Срок:</strong> {{ knowledge.durationMonths }} мес.</p>
+      <p><strong>Цель:</strong> {{ knowledge.goal }}</p>
+    </div>
+  </article>
+</section>

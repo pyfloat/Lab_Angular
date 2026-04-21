@@ -1,9 +1,9 @@
-﻿<section class="catalog-head">
+<section class="catalog-head">
   <div>
     <h1>Программа курса «Системное администрирование»</h1>
     <p>
-      Ниже показаны основные учебные модули курса: Linux, сети, безопасность и
-      итоговая практика с разбором типовых задач системного администратора.
+      Ниже показаны основные учебные модули курса. Данные загружаются из сервиса
+      `CourseService` и выводятся через дочерний компонент карточки.
     </p>
   </div>
   <img src="images/moderation.svg" alt="Учебные модули курса" />
@@ -11,13 +11,11 @@
 
 <section class="module-grid">
   <app-module-card
-    *ngFor="let module of modules"
-    [title]="module.title"
-    [description]="module.description"
-    [image]="module.image"
-    [level]="module.level"
-    [duration]="module.duration"
-    [highlighted]="module.highlighted ?? false"
+    *ngFor="let course of courses"
+    [title]="course.title"
+    [description]="course.description"
+    [image]="course.image"
+    [price]="course.price"
   ></app-module-card>
 </section>
 

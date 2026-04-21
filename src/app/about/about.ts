@@ -1,5 +1,17 @@
 ﻿import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  DoCheck,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ContentFrame } from './content-frame/content-frame';
 import { CourseCard } from './course-card/course-card';
@@ -13,7 +25,19 @@ import { PlatformCourse, TrackFilter } from './about.models';
   templateUrl: './about.html',
   styleUrl: './about.scss'
 })
-export class About {
+export class About
+  implements
+    OnChanges,
+    OnInit,
+    DoCheck,
+    AfterContentInit,
+    AfterContentChecked,
+    AfterViewInit,
+    AfterViewChecked
+{
+  // Input declared for lifecycle demonstration; ngOnChanges works with @Input bindings.
+  @Input() lifecycleDemoInput = 'about';
+
   @ViewChild(CourseFilters, { static: false })
   private filtersComponent?: CourseFilters;
 
@@ -78,6 +102,54 @@ export class About {
       isOpen: false
     }
   ];
+
+  lifecycleState = {
+    onChangesCount: 0,
+    onInitCount: 0,
+    doCheckCount: 0,
+    afterContentInitCount: 0,
+    afterContentCheckedCount: 0,
+    afterViewInitCount: 0,
+    afterViewCheckedCount: 0,
+    lastHook: ''
+  };
+  lastChangesKeys: string[] = [];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.lifecycleState.onChangesCount++;
+    this.lifecycleState.lastHook = 'ngOnChanges';
+    this.lastChangesKeys = Object.keys(changes);
+  }
+
+  ngOnInit(): void {
+    this.lifecycleState.onInitCount++;
+    this.lifecycleState.lastHook = 'ngOnInit';
+  }
+
+  ngDoCheck(): void {
+    this.lifecycleState.doCheckCount++;
+    this.lifecycleState.lastHook = 'ngDoCheck';
+  }
+
+  ngAfterContentInit(): void {
+    this.lifecycleState.afterContentInitCount++;
+    this.lifecycleState.lastHook = 'ngAfterContentInit';
+  }
+
+  ngAfterContentChecked(): void {
+    this.lifecycleState.afterContentCheckedCount++;
+    this.lifecycleState.lastHook = 'ngAfterContentChecked';
+  }
+
+  ngAfterViewInit(): void {
+    this.lifecycleState.afterViewInitCount++;
+    this.lifecycleState.lastHook = 'ngAfterViewInit';
+  }
+
+  ngAfterViewChecked(): void {
+    this.lifecycleState.afterViewCheckedCount++;
+    this.lifecycleState.lastHook = 'ngAfterViewChecked';
+  }
 
   get visibleCourses(): PlatformCourse[] {
     return this.courses.filter((course) => {
